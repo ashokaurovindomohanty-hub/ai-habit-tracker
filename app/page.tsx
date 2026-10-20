@@ -1,25 +1,37 @@
 "use client"
-import { useState } from "react"
-export default function Home() {
-  const [habits, setHabits] = useState(["Drink Water","Exercise","Read"])
+import { useState, useEffect } from "react"
+export default function Home(){
+  const [habits,setHabits]=useState([
+    {id:1, name:"Drink Water", done:false},
+    {id:2, name:"Exercise", done:false},
+    {id:3, name:"Read", done:false}
+  ])
+  const [streak, setStreak] = useState(0)
   const [input,setInput]=useState("")
-  return (
-    <main className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black text-white p-10">
-      <div className="max-w-xl mx-auto">
-        <h1 className="text-5xl font-black text-center tracking-tighter">AI HABIT TRACKER</h1>
-        <p className="text-center text-white/60 mt-2 tracking-widest uppercase text-sm">Cinematic Daily Discipline</p>
-        <div className="flex gap-2 mt-8">
-          <input value={input} onChange={e=>setInput(e.target.value)} placeholder="New habit..." className="flex-1 p-3 rounded-xl bg-white/10 backdrop-blur border border-white/10 outline-none" />
-          <button onClick={()=>{if(input){setHabits([...habits,input]); setInput("")}}} className="px-6 py-3 bg-white text-black rounded-xl font-bold">Add</button>
-        </div>
-        <ul className="mt-8 space-y-3">
-          {habits.map(h=>(
-            <li key={h} className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 flex justify-between items-center shadow-2xl">
-              {h} <input type="checkbox" className="w-5 h-5" />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </main>
-  )
+  useEffect(() => {
+    if(habits.length > 0 && habits.every(h => h.done)) setStreak(s => s+1)
+  }, [habits])
+return(
+<main className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black text-white p-10">
+<div className="max-w-xl mx-auto">
+<div className="text-center text-amber-400 font-bold">🔥 Streak: {streak} days</div>
+<div className="text-center py-10 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl">
+<h1 className="text-5xl font-black">AI HABIT TRACKER</h1>
+<p className="text-white/70 mt-2 tracking-widest text-sm">CINEMATIC DISCIPLINE</p>
+</div>
+<div className="flex gap-2 mt-8">
+<input value={input} onChange={e=>setInput(e.target.value)} placeholder="New habit..." className="flex-1 p-3 rounded-xl bg-white/10 border border-white/10 outline-none" />
+<button onClick={()=>{if(input){setHabits([...habits,{id:Date.now(), name:input, done:false}]);setInput("")}}} className="px-6 py-3 bg-white text-black rounded-xl font-bold">Add</button>
+</div>
+<ul className="mt-6 space-y-2">
+{habits.map(h=> (
+<li key={h.id} className="flex justify-between p-3 bg-white/10 rounded-xl">
+<span>{h.name}</span>
+<input type="checkbox" checked={h.done} onChange={()=> setHabits(a=> a.map(x=> x.id===h.id ? {...x, done:!x.done}:x))} />
+</li>
+))}
+</ul>
+</div>
+</main>
+)
 }
