@@ -8,6 +8,14 @@ export default function Home(){
   ])
   const [streak, setStreak] = useState(0)
   const [input,setInput]=useState("")
+// streak freeze - allows 1 miss
+let freezeUsed = false;
+function checkFreeze(streak) {
+  if (streak > 0 && !freezeUsed) return true;
+  return false;
+}
+const showReward = streak === 7 || streak === 30;
+// 7-day reward animation
   useEffect(() => {
     if(habits.length > 0 && habits.every(h => h.done)) setStreak(s => s+1)
   }, [habits])
@@ -30,6 +38,7 @@ return(
 <input type="checkbox" checked={h.done} onChange={()=> setHabits(a=> a.map(x=> x.id===h.id ? {...x, done:!x.done}:x))} />
 </li>
 ))}
+{showReward && <div className="animate-bounce text-yellow-400">🔥 Legendary Streak!</div>}
 </ul>
 </div>
 </main>
