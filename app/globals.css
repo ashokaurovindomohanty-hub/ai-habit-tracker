@@ -1,27 +1,49 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: #000;
-  color: #fff;
+  background: radial-gradient(ellipse at top, #1a1033 0%, #0a0a1a 60%, #050510 100%);
   min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+/* Glass habit cards */
+.bg-white\/5 {
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+/* Glowing buttons */
+button.bg-purple-600 {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+  transition: all 0.3s;
+}
+button.bg-purple-600:hover {
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.9);
+  transform: translateY(-1px);
+}
+/* Title halo */
+h1 {
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.8), 0 0 40px rgba(139, 92, 246, 0.4);
+  letter-spacing: 0.1em;
+}
+/* Streak fire glow */
+.text-3xl {
+  text-shadow: 0 0 15px rgba(249, 115, 22, 0.7);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+/* AI Insight glow */
+.bg-purple-600\/20 {
+  background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(236,72,153,0.15));
+  box-shadow: 0 0 30px rgba(139,92,246,0.25);
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
