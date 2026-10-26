@@ -1,4 +1,5 @@
 "use client";
+import AICoach from '@/src/components/AICoach';
 import { useState, useEffect } from "react";
 type Habit = { id: string; name: string; streak: number; goalDays: number; lastCompleted: string | null; perkUntil: string | null; doneToday?: boolean }
 export default function Page() {
@@ -73,12 +74,14 @@ const totalStreak = habits.reduce((sum, h) => sum + h.streak, 0);
 <main className="min-h-screen text-white p-6 bg-gradient-to-br from-[#0a0a1a] via-[#1a1033] to-[#2a0a2a] flex flex-col items-center">
 <header className="flex justify-between items-center w-full max-w-5xl mx-auto px-6 py-4">
 <div className="w-full max-w-5xl mx-auto">
-  <h1 className="text-4xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent">AI HABIT TRACKER</h1>
-  <div className="flex gap-2">
-    <button onClick={()=>{const b=new Blob([JSON.stringify(habits,null,2)],{type:"application/json"});const u=URL.createObjectURL(b);Object.assign(document.createElement("a"),{href:u,download:"habits.json"}).click();}} className="px-3 py-1 bg-white/10 border border-white/20 rounded-lg text-sm">⬇ Export</button>
-    <button onClick={()=>navigator.share?.({title:"My Streak",text:`🔥 ${totalStreak} day streak ${location.href}`})} className="px-3 py-1 bg-white text-black rounded-full text-sm font-bold">Share Streak</button>
-  </div>
+<h1 className="text-4xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent">AI HABIT TRACKER</h1>
+<div className="flex gap-2">
+<button onClick={()=>{const b=new Blob([JSON.stringify(habits,null,2)],{type:"application/json"});const u=URL.createObjectURL(b);Object.assign(document.createElement("a"),{href:u,download:"habits.json"}).click();}} className="px-3 py-1 bg-white/10 border border-white/20 rounded-lg text-sm">⬇ Export</button>
+<button onClick={()=>navigator.share?.({title:"My Streak",text:`🔥 ${totalStreak} day streak ${location.href}`})} className="px-3 py-1 bg-white text-black rounded-full text-sm font-bold">Share Streak</button>
+</div>
+</div>
 </header>
+<AICoach />
 {/* Rewards Shop */}
 <div className="p-4 rounded-xl bg-black/40 border border-yellow-500/20">
   <h3 className="text-yellow-400 font-bold mb-2">🎁 Rewards Shop</h3>
@@ -128,7 +131,6 @@ const totalStreak = habits.reduce((sum, h) => sum + h.streak, 0);
     👑 VAULT THEME UNLOCKED
   </div>
 )}
-</div>
 </main>
 );
 }
